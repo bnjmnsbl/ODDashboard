@@ -35,7 +35,7 @@ Promise.all([data, data2])
 function initialize(results) {
 
 	var licenses = getHighscores(results, "license", 3);
-	var authors = getHighscores(results, "author", 3);
+	var authors = getHighscores(results, "author", 5);
 	var tags = getHighscores(results, "tags", 5);
 	var formats = getHighscores(results, "formats", 7);
     console.dir(results);
@@ -45,6 +45,7 @@ function initialize(results) {
 	console.dir(licenses);
 	console.dir(tags);
 	console.dir(formats);
+	console.dir(authors);
 	//Namen zählen
 	//Häufigste Tags
 	// Anzahl Formate (in data.result.resources)

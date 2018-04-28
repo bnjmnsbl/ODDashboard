@@ -1,13 +1,94 @@
-.container {
-	display: grid;
-	height: 100vh;
-	grid-template-columns: 100px 250px 1fr;
-	grid-template-rows: 1fr 1fr;
-	grid-template-areas: "amount authors activity licenses formats tags";
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+
+body {
+	background-color: #000000;
+	font-family: "Inconsolata", monospace;
+	font-size: 8pt;
+	color: #ffff;
 }
+
+#lt-container-outside{
+	position: fixed;
+	top: 30px;
+	left: 30px;
+	width: 1140px;
+	height: 800px;
+	z-index: 10;
+}
+
+.container-border {
+    border: 2px solid #6fc0ba;
+    border-radius: 5px;
+   /* box-shadow: 0 0 2px #005b8e, inset 0 0 2px #005b8e;*/
+}
+
+
+.container {
+	position: absolute;
+	left: 50px;
+	top: 30px;
+	display: grid;
+	grid-gap: 10px;
+	height: auto;
+	grid-template-columns: 250px 250px 500px;
+	grid-template-rows: 15px 1fr 1fr ;
+	grid-template-areas: 	"header-left header-middle header-right"
+							"amount authors activity" 
+							"licenses formats tags";
+}
+
+
+.box {
+	
+	border: 2px solid #6fc0ba;
+	border-radius: 2px;
+	padding: 3px;
+
+}
+
+a {
+	text-decoration: none;
+}
+
+h2 {
+	font-size: 10pt;
+	border-top: 1px solid #1d2c33;
+	border-bottom: 1px solid #1d2c33;
+
+}
+
+h3 {
+	font-size: 8pt; 
+	border-bottom: 1px dotted #1d2c33;
+}
+
+
+
+.header {
+	border-top: 1px solid #1d2c33;
+	border-bottom: 1px solid #1d2c33;
+}
+
+.header-left {
+	grid-area: header-left;
+	text-transform: uppercase;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+.header-left .right {
+	float: right;
+}
+
+.content {
+	border: 1px solid #1b2f2d;
+	padding: 3px;
+}
+
 
 .amount {
 	grid-area: amount;
+	
 }
 
 .authors {
@@ -19,17 +100,25 @@
 }
 
 .licenses {
-
-	grid-row: 2/3;
+	grid-column: 1/3;
+	grid-row: 3;
 }
 
 .formats {
-	border 2px solid; 
-	grid-row: 2/3;
+
 }
 
 .tags {
-	grid-row: 2/3;
+	grid-area: tags;
 }
 
+.alt-1 {
+    color: #00eeee;
+}
+.alt-2 {
+    color: #ffcc00;
+}
 
+.right {
+	float: right;
+}
