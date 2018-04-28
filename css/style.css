@@ -1,0 +1,35 @@
+.container {
+	display: grid;
+	height: 100vh;
+	grid-template-columns: 100px 250px 1fr;
+	grid-template-rows: 1fr 1fr;
+	grid-template-areas: "amount authors activity licenses formats tags";
+}
+
+.amount {
+	grid-area: amount;
+}
+
+.authors {
+	grid-area: authors;
+}
+
+.activity {
+	grid-area: activity;
+}
+
+.licenses {
+
+	grid-row: 2/3;
+}
+
+.formats {
+	border 2px solid; 
+	grid-row: 2/3;
+}
+
+.tags {
+	grid-row: 2/3;
+}
+
+
