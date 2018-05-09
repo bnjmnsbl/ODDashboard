@@ -38,18 +38,15 @@ function initialize(results) {
 	var authors = getHighscores(results, "author", 5);
 	var tags = getHighscores(results, "tags", 5);
 	var formats = getHighscores(results, "formats", 7);
-    console.dir(results);
-  	console.log("Total # of datasets: " + getTotalNumber(results))
-   	console.log("Neuester Datensatz: " + findNewest(results)); 
-	console.dir(getTimestamps(results));
-	console.dir(licenses);
-	console.dir(tags);
-	console.dir(formats);
-	console.dir(authors);
+    //console.dir(results);
+  //	console.log("Total # of datasets: " + getTotalNumber(results))
+ //  	console.log("Neuester Datensatz: " + findNewest(results)); 
+//	console.dir(getTimestamps(results));
+	
 	//Namen zählen
 	//Häufigste Tags
-	// Anzahl Formate (in data.result.resources)
 
+	makeChart(authors);
 
 }
 
@@ -145,5 +142,51 @@ function getHighscores(data, item, amount){
 }
 
 
+function makeChart(value) {
+	var ctx = document.getElementById("chartOne").getContext('2d');
 
+	
+	var authorNames = value.map((el) => el.key);
+	var nrOfDatasets = value.map((el) => el.value);
+
+
+	var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: ["SenSW", "SenGPG", "Yellow", "Green", "Purple"],
+	        //labels: authorNames,
+
+	        datasets: [{
+	            
+	            data: nrOfDatasets,
+	            backgroundColor: '#6fc0ba',
+	            borderColor: '#00eeee',
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        title: {
+	        	display: true,
+	        	text: "Top-Bereitsteller"
+	        },
+	        legend: {
+	        	display: false
+	        },
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }],
+	            xAxes: [{
+	            	ticks: {
+	            		autoSkip: false,
+	            		maxRotation: 90,
+	            		minRotation: 90
+	            	}
+	            }]
+	        }
+	    }
+	});
+}
 

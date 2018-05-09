@@ -1,0 +1,49 @@
+<!DOCTYPE html> 
+
+<html>
+	<head>
+		<title>Grid Dashboard</title>
+		
+		<link href="./css/dash.css" rel="stylesheet" type="text/css">
+	</head>
+  <body>
+  
+  <div class="container-out">
+    <div class="container-in">
+    <div class="grid">
+      <header class="header-left">BERLIN <span class="alt-2">|<span class="alt-1"> OPEN DATA<span class="right">IDEATION <span class="alt-2">|<span class="header" style="color: white"> PROTOTYPING</header>
+      
+      <div class="content datasets">
+        <h2 class="content content-headline">Datensätze</h2>
+      <p class="content content-body">
+        Gesamt: <span id="amountJS" class="alt-1 right">1645</span><br />
+      </p>
+
+      <p>Diesen Monat: <span id="monthJS" class ="alt-2 right"> +45</span><br /></p>
+      
+      <p>Monatsdurchschnitt: <span id="monthAvgJS" class ="alt-2 right"> 54</span><br /><br /></p>
+
+      <h2 class="content content-headline">Neueste Datensätze</h2>
+      <p id="new1JS">vbb-fahrplandaten-mitte-april-2018-bis-mitte-dezember-2018<a id="new1JSLink" class="alt-1 right" href="#">LINK</a><br /></p>
+        <p id="new2JS">berlin-um-1900-aisber<a id="new2JSLink" class="alt-1 right" href="#">LINK</a><br /></p>
+        <p id="new3JS">archaologische-fundstellen-und-bodendenkmale-aisber<a id="new3JSLink" class="alt-1 right" href="#">LINK</a><br /></p>
+
+      </div>
+      
+      <div class="b">B</div>
+      <div class="c">
+        <canvas id="chartOne" width="300px" height="300px"></canvas></div>
+      <div class="d">D</div>
+      <div class="e">E</div>
+      <div class="f">F</div>
+    </div>
+    </div>
+  </div>
+  
+  <script type="text/javascript" src="lib/Chart.bundle.min.js"></script>
+  <script type="text/javascript" src="index.js"></script>
+  <!--script type="text/javascript" src="chart.js"></script-->
+  </body>
+
+	
+</html>
