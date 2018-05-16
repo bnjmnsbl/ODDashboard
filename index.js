@@ -1,6 +1,6 @@
 'use strict'
 
-//var resultsArray = [];
+// next: finish makeActivity()
 
 function jsonp(url) {
     return new Promise(function(resolve, reject) {
@@ -34,19 +34,22 @@ Promise.all([data, data2])
 
 function initialize(results) {
 
-	var licenses = getHighscores(results, "license", 3);
-	var authors = getHighscores(results, "author", 5);
+	var licenses = getHighscores(results, "license", 5);
+	var authors = getHighscores(results, "author", 7);
 	var tags = getHighscores(results, "tags", 5);
 	var formats = getHighscores(results, "formats", 7);
+    var activity = getTimestamps(results); 
     //console.dir(results);
-  //	console.log("Total # of datasets: " + getTotalNumber(results))
- //  	console.log("Neuester Datensatz: " + findNewest(results)); 
-//	console.dir(getTimestamps(results));
+  	//	console.log("Total # of datasets: " + getTotalNumber(results))
+	 //  	console.log("Neuester Datensatz: " + findNewest(results)); 
+	//console.dir(getTimestamps(results));
 	
 	//Namen zählen
 	//Häufigste Tags
-
+	
 	makeChart(authors);
+	makeDonut(licenses);
+	makeActivity(activity);
 
 }
 
@@ -145,16 +148,23 @@ function getHighscores(data, item, amount){
 function makeChart(value) {
 	var ctx = document.getElementById("chartOne").getContext('2d');
 
+	var authorDict = {
+		"Senatsverwaltung für Stadtentwicklung und Wohnen Berlin": "SenSW",
+		"Senatsverwaltung für Gesundheit und Soziales Berlin": "SenGeSoz",
+		"Senatsverwaltung für Umwelt, Verkehr und Klimaschutz Berlin": "SenUVK",
+		"Senatsverwaltung für Gesundheit, Pflege und Gleichstellung Berlin" : "SenGPG",
+		"Amt für Statistik Berlin-Brandenburg": "AfSBB",
+		"Stromnetz Berlin GmbH": "Stromnetz",
+		"VBB - Verkehrsverbund Berlin-Brandenburg GmbH": "VBB"
+		}
+
+		var authorNames = value.map((el) => authorDict[el.key]);
+		var nrOfDatasets = value.map((el) => el.value);
 	
-	var authorNames = value.map((el) => el.key);
-	var nrOfDatasets = value.map((el) => el.value);
-
-
 	var myChart = new Chart(ctx, {
-	    type: 'bar',
+	    type: 'pie',
 	    data: {
-	        labels: ["SenSW", "SenGPG", "Yellow", "Green", "Purple"],
-	        //labels: authorNames,
+	        labels: authorNames,
 
 	        datasets: [{
 	            
@@ -188,5 +198,80 @@ function makeChart(value) {
 	        }
 	    }
 	});
+}
+
+function makeDonut(value) {
+	
+	var licenceDict = {
+		"Creative Commons Namensnennung (CCBY)": "CC-BY",
+		"Nutzungsbestimmungen für die Bereitstellung von Geodaten des Landes Berlin": "Geo Berlin",
+		"Creative Commons Attribution ShareAlike (ccbysa)": "CC-BY-SA",
+		"Andere geschlossene Lizenz": "Other (nicht offen)",
+		"Creative Commons CCZero (CC0)": "CC-0",
+		"dl-de-2-0": "DL DE 2.0"
+	}
+
+	var ctx = document.getElementById("chartTwo").getContext('2d');
+
+	var licenceNames = value.map((el) => licenceDict[el.key]);
+	var nrOfDatasets = value.map((el) => el.value);
+
+	var myChart = new Chart(ctx, {
+	    type: 'doughnut',
+	    data: {
+	        labels: licenceNames,
+
+	        datasets: [{
+	            
+	            data: nrOfDatasets,
+	            backgroundColor: '#6fc0ba',
+	            borderColor: '#00eeee',
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        title: {
+	        	display: true,
+	        	text: "Lizenzen"
+	        },
+	        legend: {
+	        	display: false
+	        }
+	        
+	    }
+	});
+
+}
+
+function makeActivity(value) {
+
+	/*var chartData = [];
+	value.forEach(function(el) {
+		var temp = {};
+		temp.date = el.time;
+		temp.count= 1; // wenn mehrere Einträge mit selbem datum, erhöhe
+		chartData.push(temp);
+	})
+	console.dir(chartData);
+*/
+ var now = moment().endOf('day').toDate();
+ var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
+ var chartData = d3.timeDays(yearAgo, now).map(function (dateElement) {
+      return {
+        date: dateElement,
+        count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 60) : Math.floor(Math.random() * 10)
+      };
+    });
+
+	var chart1 = calendarHeatmap()
+	              .data(chartData)
+	              .selector('#chartThree')
+	              .colorRange(['#D8E6E7', '#6fc0ba'])
+	              .tooltipEnabled(true)
+	              .legendEnabled(false)
+	              .onClick(function (data) {
+	                console.log('onClick callback. Data:', data);
+	              });
+	chart1();  // render the chart
 }
 
