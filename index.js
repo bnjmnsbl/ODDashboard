@@ -36,26 +36,36 @@ function initialize(results) {
 
 	var licenses = getHighscores(results, "license", 5);
 	var authors = getHighscores(results, "author", 7);
-	var tags = getHighscores(results, "tags", 5);
+	var tags = getHighscores(results, "tags", 10);
 	var formats = getHighscores(results, "formats", 7);
     var activity = getTimestamps(results); 
-    //console.dir(results);
+    var newest3 = findNewest(results) 
   	//	console.log("Total # of datasets: " + getTotalNumber(results))
 	 //  	console.log("Neuester Datensatz: " + findNewest(results)); 
 	//console.dir(getTimestamps(results));
 	
 	//Namen zählen
-	//Häufigste Tags
 	
 	makeChart(authors);
 	makeDonut(licenses);
+	makeTagCloud(tags);
 	makeActivity(activity);
+	last30Days(results);
 
+
+
+	//Fill HTML
+	document.getElementById("totalDatasets").innerHTML = getTotalNumber(results);
+	document.getElementById("last30").innerHTML = "+" + getTotalNumber(last30Days(results));
+	
+	for (var i=0; i<3; i++) {
+		document.getElementById("newest" + i).innerHTML = newest3[i].name + "<a class='alt-1 right' href='"+ newest3[i].url + "'>LINK</a><br />";
+	}
 }
 
 
 function findNewest(data) {
-	return data["0"].name;
+	return [data[0], data[1], data[2]];
 }
 
 function getTotalNumber(data) {
@@ -66,6 +76,17 @@ function getTimestamps(data) {
 	var timestamps = data.map(x => ({"time": x.metadata_modified, "name": x.name}));
 	return timestamps;
 }
+
+function last30Days(data) {
+	var now = new Date() 
+	var lastMonth = new Date(now);
+		lastMonth.setDate(now.getDate() - 30);
+
+	var last30 = data.filter(x => Date.parse(x.metadata_modified) > Date.parse(lastMonth));
+	return last30;
+}
+
+
 
 function getHighscores(data, item, amount){
 	
@@ -162,34 +183,34 @@ function makeChart(value) {
 		var nrOfDatasets = value.map((el) => el.value);
 	
 	var myChart = new Chart(ctx, {
-	    type: 'pie',
+	    type: 'bar',
 	    data: {
 	        labels: authorNames,
 
 	        datasets: [{
 	            
 	            data: nrOfDatasets,
-	            backgroundColor: '#6fc0ba',
+	            backgroundColor: '#000000',
 	            borderColor: '#00eeee',
 	            borderWidth: 1
 	        }]
 	    },
 	    options: {
-	        title: {
-	        	display: true,
-	        	text: "Top-Bereitsteller"
-	        },
+	       
 	        legend: {
 	        	display: false
 	        },
 	        scales: {
 	            yAxes: [{
 	                ticks: {
-	                    beginAtZero:true
+	                	fontColor: "white",
+	                    beginAtZero:true,
+	                    color: '#00eeee'
 	                }
 	            }],
 	            xAxes: [{
 	            	ticks: {
+	            		fontColor: "white",
 	            		autoSkip: false,
 	            		maxRotation: 90,
 	            		minRotation: 90
@@ -224,16 +245,14 @@ function makeDonut(value) {
 	        datasets: [{
 	            
 	            data: nrOfDatasets,
-	            backgroundColor: '#6fc0ba',
+	            backgroundColor: '#000000',
 	            borderColor: '#00eeee',
-	            borderWidth: 1
+	            borderWidth: 1,
+
 	        }]
 	    },
 	    options: {
-	        title: {
-	        	display: true,
-	        	text: "Lizenzen"
-	        },
+	        
 	        legend: {
 	        	display: false
 	        }
@@ -244,17 +263,94 @@ function makeDonut(value) {
 }
 
 function makeActivity(value) {
+	
+	var dateObj = {};
+	var dateArr = [];
+	var valueArr = [];
 
-	/*var chartData = [];
+
+	value.forEach(function(el) {
+		var d = new Date(el.time);
+		var year= d.getFullYear();
+		var month = d.getMonth() + 1;
+		var day = d.getDate();
+		var myDate = (year + "-" + month + "-" + day);	
+
+		if (dateObj.hasOwnProperty(myDate)) {
+			dateObj[myDate] = dateObj[myDate] + 1;
+		} else {
+			dateArr.push(myDate);
+			dateObj[myDate] = 1;
+		}
+		
+	})
+	
+	dateArr.forEach(function(el) {
+		valueArr.push(dateObj[el]);
+	})
+
+	var ctx = document.getElementById("activity").getContext('2d');
+	console.log(valueArr.length);
+	valueArr = valueArr.reverse().slice(2);
+	dateArr = dateArr.reverse().slice(2);
+
+	console.dir(valueArr);
+	console.dir(dateArr);
+	var myChart = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	        labels: dateArr,
+
+	        datasets: [{
+	          data: valueArr,
+	          backgroundColor: '#6fc0ba',
+	            borderColor: '#00eeee',
+	            borderWidth: 1,
+	            fill: false,
+	            pointRadius: 1
+
+	        }]
+	    },
+	    options: {
+	       
+	        legend: {
+	        	display: false
+	        },
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                	fontColor: "white",
+	                    color: '#00eeee'
+	                }
+	            }],
+	            xAxes: [{
+	            	ticks: {
+	            		fontColor: "white",
+	            		
+	            	}
+	            }]
+	  
+	        }
+		}
+	});
+
+
+}
+
+/*
+function makeActivity(value) {
+
+	var chartData = [];
 	value.forEach(function(el) {
 		var temp = {};
 		temp.date = el.time;
+		
 		temp.count= 1; // wenn mehrere Einträge mit selbem datum, erhöhe
 		chartData.push(temp);
 	})
 	console.dir(chartData);
-*/
- var now = moment().endOf('day').toDate();
+
+/* var now = moment().endOf('day').toDate();
  var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
  var chartData = d3.timeDays(yearAgo, now).map(function (dateElement) {
       return {
@@ -274,4 +370,29 @@ function makeActivity(value) {
 	              });
 	chart1();  // render the chart
 }
+
+*/
+
+function makeTagCloud(value) {
+	var taglist = [];
+
+	value.forEach(function(el) {
+		var temp = [];
+		temp[0] = el.key;
+		temp[1] = el.value;
+		taglist.push(temp);
+	})
+
+	WordCloud(document.getElementById('tagCanvas'), 
+		{ 	list: taglist,
+			fontFamily: "Inconsolata",
+			color: '#00eeee',
+			backgroundColor: "#000000",
+			weightFactor: 0.04,
+			maxRotation:0
+		});
+
+}
+
+
 
