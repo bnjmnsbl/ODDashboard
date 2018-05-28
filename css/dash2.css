@@ -3,8 +3,6 @@
 	src: url("../fonts/Inconsolata-Regular.ttf");
 }
 
-/*@import url('https://fonts.googleapis.com/css?family=Inconsolata');*/
-
 :root {
 	box-sizing: border-box;
 	--main-font: "Inconsolata", monospace;
@@ -24,23 +22,35 @@ body {
 }
 
 .container-out {
-	max-width: 1080px;
-	min-width: 1080px;
-	margin: 0 auto;
+	max-width: 1280px;
+	
 }
 
-.container-in {
-	border: 2px solid var(--border-color);
-	border-radius: 0.5em;
-	padding: 1em;
+/*.container-in {
+		
 
-}
+
+}*/
+
 
 .grid {
+
+	border: 2px solid var(--border-color);
+	border-radius: 0.5em;
+	padding: 2em;
+	margin: 0 auto;
 	display: grid;
-	grid-template-columns: 1fr 2fr 2fr;
+	/*grid-template-columns: 500px;
 	grid-template-rows: 1em 2fr 2fr;
+	*/
 	grid-gap: 0.5em;
+	grid-template-areas: 
+	"header"
+	"a"
+	"b"
+	"c"
+	"d"
+	"e";
 
 }
 
@@ -53,7 +63,7 @@ body {
 }
 
 .grid header {
-	grid-column: 1/4;
+	grid-area: header;
 	padding: 0;
 	border: 1px solid var(--border-color);
 	border-left: none;
@@ -65,21 +75,36 @@ body {
 	
 }
 
+
+.grid .a {
+	grid-area: a;
+}
+
+.grid .b {
+	grid-area: b;
+}
 .grid .b canvas {
-	padding-top: 3em;
+	padding: 1em;
+}
+
+
+.grid .c {
+	grid-area: c;
 }
 
 .grid .c canvas {
 	padding-top: 1em;
 }
-.grid .b {
-	grid-column: 2/3
 
+
+.grid .d {
+	grid-area: d;
 }
 
 .grid .e {
-	grid-column: 2/4;
+	grid-area: e;
 }
+
 
 
 .content {
@@ -126,3 +151,51 @@ h2.top-pad {
 	float: right;
 	text-align: right;
 }
+
+@media (min-width: 500px)   {  
+  
+  	/*.container-out {
+  		min-width: 500px;
+  		max-width: 900px;
+  	}*/
+
+ /* 	.container-in {
+  		min-width: 820px;
+  		max-width: 880px;
+  	}*/
+    .grid {
+
+   		grid-template-columns: auto auto;
+	    grid-template-areas: 
+	    "header		header"
+	    "a 		b"
+	    "c 		d"
+	    "e		e" ;
+    }
+}
+
+@media (min-width: 900px)   {  
+  
+
+
+  	/*.container-out {
+  		max-width: 1280px;
+  		min-width: 920px;
+  	} 
+  */
+  /*	.container.in {
+  		max-width: 1024px;
+  		min-width: 900px;
+  	}*/
+
+    .grid {
+
+   		grid-template-columns: auto auto auto;
+	    grid-template-areas: 
+	    "header	header	header"
+	    "a 		b 		c"
+	    "d      e		e" ;
+    }
+}
+
+

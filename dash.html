@@ -3,28 +3,29 @@
 <html>
 	<head>
 		<title>Berlin Open Data Dashboard</title>
-	    <link href="./css/dash.css" rel="stylesheet" type="text/css">
+	    <link href="./css/dash2.css" rel="stylesheet" type="text/css">
   </head>
   <body>
   
   <div class="container-out">
+    
     <div class="container-in">
-    <div class="grid">
-      
-      <header class="header-left">
+    
+    <div class="grid">     
+
+      <header class="main-header">
         BERLIN <span class="alt-2">|<span class="alt-1"> OPEN DATA<span class="right">IDEATION <span class="alt-2">|<span class="header" style="color: white"> PROTOTYPING</span>
       </header>
       
       <div class="a content">
         <h2>Datensätze</h2>
-         <p class="content content-body">
-        Gesamt: <span id="totalDatasets" class="alt-1 right">...LOADING</span><br />
+         <p>Gesamt: <span id="totalDatasets" class="alt-1 right">...LOADING</span><br />
       </p>
 
       <p>Letzte 30 Tage:<span id="last30" class ="alt-1 right">...LOADING</span></p>
     
-        <h2 class="top-pad">Neueste</h2>
-      <p id="newest0">...LOADING</p>
+        <h2 class="top-pad">Neueste Daten</h2>
+        <p id="newest0">...LOADING</p>
         <p id="newest1">...LOADING</p>
         <p id="newest2">...LOADING</p>
       </div>
@@ -37,17 +38,22 @@
       
       <div class="c content">
         <h2>Top-Bereitsteller</h2>
-        <canvas id="chartOne" width="300px" height="300px"></canvas></div>
+        <canvas id="chartOne" height="300px"></canvas>
+      </div>
+      
       <div class="d content">
-        <h2 class="content">Top-Lizenzen</h2>
-        <canvas id="chartTwo" height="300px"> </canvas></div>
+        <h2>Top-Lizenzen</h2>
+        <canvas id="chartTwo" height="300px"> </canvas>
+      </div>
+      
       <div class="e content"> 
-        <h2 class="content">Update-Aktivität</h2>
-        <canvas id="activity"></div>
-     </div>
-    </div>
-    </div>
+        <h2>Update-Aktivität</h2>
+        <canvas id="activity"> </canvas>
+      </div>
+     
 
+     </div>
+   </div>
   </div>
    
   <script type="text/javascript" src="lib/wordcloud2.js"></script>
