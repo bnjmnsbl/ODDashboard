@@ -78,6 +78,9 @@ canvas {
 	position: relative;
 	margin: auto;
 	height: 50vh;
+	align-items: center;
+	display: flex;
+
 	
 }
 
@@ -88,10 +91,7 @@ canvas {
 .grid .b {
 	grid-area: b;
 }
-.grid .b canvas {
-	display: block;
-	padding-top: 3em;
-}
+
 
 .grid .c {
 	grid-area: c;
