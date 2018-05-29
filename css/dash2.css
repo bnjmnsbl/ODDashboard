@@ -77,7 +77,8 @@ canvas {
 .chart-container {
 	position: relative;
 	margin: auto;
-	height: 50vh;
+	height: 40vh;
+	display: flex;
 	
 }
 
@@ -89,8 +90,7 @@ canvas {
 	grid-area: b;
 }
 .grid .b canvas {
-	display: block;
-	padding-top: 3em;
+	
 }
 
 .grid .c {
