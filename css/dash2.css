@@ -77,8 +77,15 @@ canvas {
 .chart-container {
 	position: relative;
 	margin: auto;
+<<<<<<< HEAD
 	height: 40vh;
 	display: flex;
+=======
+	height: 50vh;
+	align-items: center;
+	display: flex;
+
+>>>>>>> gh-pages
 	
 }
 
@@ -89,9 +96,13 @@ canvas {
 .grid .b {
 	grid-area: b;
 }
+<<<<<<< HEAD
 .grid .b canvas {
 	
 }
+=======
+
+>>>>>>> gh-pages
 
 .grid .c {
 	grid-area: c;
