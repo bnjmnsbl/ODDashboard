@@ -22,19 +22,16 @@ body {
 }
 
 .container-out {
-	max-width: 1280px;
-	
+		
 }
 
-/*.container-in {
-		
-
-
-}*/
-
+canvas {
+	margin: auto;
+}
 
 .grid {
-
+	max-width: 1280px;
+	min-width: 450px;
 	border: 2px solid var(--border-color);
 	border-radius: 0.5em;
 	padding: 2em;
@@ -60,6 +57,8 @@ body {
 	padding: 1em;
 	border: 2px solid;
 	border-radius: 0.3em;
+	overflow: auto;
+
 }
 
 .grid header {
@@ -75,6 +74,12 @@ body {
 	
 }
 
+.chart-container {
+	position: relative;
+	margin: auto;
+	height: 50vh;
+	
+}
 
 .grid .a {
 	grid-area: a;
@@ -103,6 +108,10 @@ body {
 
 .grid .e {
 	grid-area: e;
+}
+
+.chart-container .activity canvas{
+	width: 300px;
 }
 
 
@@ -152,7 +161,7 @@ h2.top-pad {
 	text-align: right;
 }
 
-@media (min-width: 500px)   {  
+@media (min-width: 600px)   {  
   
   	/*.container-out {
   		min-width: 500px;
@@ -172,21 +181,13 @@ h2.top-pad {
 	    "c 		d"
 	    "e		e" ;
     }
+
+    .chart-container .activiy {
+    	width: 600px;
+    }
 }
 
 @media (min-width: 900px)   {  
-  
-
-
-  	/*.container-out {
-  		max-width: 1280px;
-  		min-width: 920px;
-  	} 
-  */
-  /*	.container.in {
-  		max-width: 1024px;
-  		min-width: 900px;
-  	}*/
 
     .grid {
 
@@ -198,4 +199,8 @@ h2.top-pad {
     }
 }
 
-
+@media (min-width: 900px)   { 
+	.chart-container .activity canvas {
+		width: 300px;
+	}
+}

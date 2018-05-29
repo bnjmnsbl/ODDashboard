@@ -1,7 +1,5 @@
 'use strict'
-
-// next: finish makeActivity()
-
+ 
 function jsonp(url) {
     return new Promise(function(resolve, reject) {
         let script = document.createElement('script')
@@ -22,7 +20,6 @@ function jsonp(url) {
 var data = jsonp("https://ckan.govdata.de/api/3/action/package_search?fq=organization:berlin-open-data&rows=1000");
 var data2 = jsonp("https://ckan.govdata.de/api/3/action/package_search?fq=organization:berlin-open-data&rows=1000&start=1000&callback=initTwo")
 
-
 Promise.all([data, data2])
 .then(values => {
 	var resultsArray = values["0"].result.results.concat(values["1"].result.results);
@@ -40,20 +37,12 @@ function initialize(results) {
 	var formats = getHighscores(results, "formats", 7);
     var activity = getTimestamps(results); 
     var newest3 = findNewest(results) 
-  	//	console.log("Total # of datasets: " + getTotalNumber(results))
-	 //  	console.log("Neuester Datensatz: " + findNewest(results)); 
-	//console.dir(getTimestamps(results));
-	
-	//Namen zählen
-	
-	makeChart(authors);
-	makeDonut(licenses);
-	makeTagCloud(tags);
-	makeActivity(activity);
+  	
+	makeChart(getHighscores(results, "author", 7));
+	makeDonut(getHighscores(results, "license", 5));
+	makeTagCloud(getHighscores(results, "tags", 10));
+	makeActivity(getTimestamps(results));
 	last30Days(results);
-
-
-
 	//Fill HTML
 	document.getElementById("totalDatasets").innerHTML = getTotalNumber(results);
 	document.getElementById("last30").innerHTML = "+" + getTotalNumber(last30Days(results));
@@ -61,6 +50,7 @@ function initialize(results) {
 	for (var i=0; i<3; i++) {
 		document.getElementById("newest" + i).innerHTML = newest3[i].name + "<a class='alt-1 right' href='"+ newest3[i].url + "'>LINK</a><br />";
 	}
+
 }
 
 
@@ -168,7 +158,7 @@ function getHighscores(data, item, amount){
 
 function makeChart(value) {
 	var ctx = document.getElementById("chartOne").getContext('2d');
-
+	ctx.canvas.height = 300;
 	var authorDict = {
 		"Senatsverwaltung für Stadtentwicklung und Wohnen Berlin": "SenSW",
 		"Senatsverwaltung für Gesundheit und Soziales Berlin": "SenGeSoz",
@@ -196,7 +186,8 @@ function makeChart(value) {
 	        }]
 	    },
 	    options: {
-	       
+	    	responsive: false,
+	    	maintainAspectRatio: false,
 	        legend: {
 	        	display: false
 	        },
@@ -227,12 +218,13 @@ function makeDonut(value) {
 		"Creative Commons Namensnennung (CCBY)": "CC-BY",
 		"Nutzungsbestimmungen für die Bereitstellung von Geodaten des Landes Berlin": "Geo Berlin",
 		"Creative Commons Attribution ShareAlike (ccbysa)": "CC-BY-SA",
-		"Andere geschlossene Lizenz": "Other (nicht offen)",
+		"Andere geschlossene Lizenz": "Andere (nicht offen)",
 		"Creative Commons CCZero (CC0)": "CC-0",
 		"dl-de-2-0": "DL DE 2.0"
 	}
 
 	var ctx = document.getElementById("chartTwo").getContext('2d');
+	ctx.canvas.height = 300;
 
 	var licenceNames = value.map((el) => licenceDict[el.key]);
 	var nrOfDatasets = value.map((el) => el.value);
@@ -252,7 +244,8 @@ function makeDonut(value) {
 	        }]
 	    },
 	    options: {
-	        
+	    	responsive: false,
+	        maintainAspectRatio: false,
 	        legend: {
 	        	display: false
 	        }
@@ -290,7 +283,15 @@ function makeActivity(value) {
 	})
 
 	var ctx = document.getElementById("activity").getContext('2d');
-	console.log(valueArr.length);
+	// if (small === true) {
+	// 	console.log("ctx is small");
+	// 	ctx.canvas.width = 300;
+	// } else {
+	// 	console.log("ctx is big");
+	// 	ctx.canvas.width = 600;
+	// }
+
+	
 	valueArr = valueArr.reverse().slice(2);
 	dateArr = dateArr.reverse().slice(2);
 
@@ -312,7 +313,8 @@ function makeActivity(value) {
 	        }]
 	    },
 	    options: {
-	       
+	    	responsive: true,
+	        maintainAspectRatio: false,
 	        legend: {
 	        	display: false
 	        },
@@ -336,42 +338,6 @@ function makeActivity(value) {
 
 
 }
-
-/*
-function makeActivity(value) {
-
-	var chartData = [];
-	value.forEach(function(el) {
-		var temp = {};
-		temp.date = el.time;
-		
-		temp.count= 1; // wenn mehrere Einträge mit selbem datum, erhöhe
-		chartData.push(temp);
-	})
-	console.dir(chartData);
-
-/* var now = moment().endOf('day').toDate();
- var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
- var chartData = d3.timeDays(yearAgo, now).map(function (dateElement) {
-      return {
-        date: dateElement,
-        count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 60) : Math.floor(Math.random() * 10)
-      };
-    });
-
-	var chart1 = calendarHeatmap()
-	              .data(chartData)
-	              .selector('#chartThree')
-	              .colorRange(['#D8E6E7', '#6fc0ba'])
-	              .tooltipEnabled(true)
-	              .legendEnabled(false)
-	              .onClick(function (data) {
-	                console.log('onClick callback. Data:', data);
-	              });
-	chart1();  // render the chart
-}
-
-*/
 
 function makeTagCloud(value) {
 	var taglist = [];

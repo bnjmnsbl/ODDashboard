@@ -1,5 +1,4 @@
 
 .DS_Store
 lib/d3.min.js
-lib/Chart.bundle.min.js
 lib/topojson.js
