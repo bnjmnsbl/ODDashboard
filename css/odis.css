@@ -1,0 +1,187 @@
+/* Lightblue: #2e91d2*/
+/*darkblue: #213A8F*/
+/*red: #E60032 */
+
+@font-face {
+	font-family: "Inconsolata";
+	src: url("../fonts/Inconsolata-Regular.ttf");
+}
+
+:root {
+	box-sizing: border-box;
+	--main-font: "Inconsolata", monospace;
+	--border-color: #213A8F;
+	--background-color: white;
+	--font-col: #213A8F;
+}
+
+*,
+::before,
+::after {
+	box-sizing: inherit;
+}
+
+
+body {
+ font-family: var(--main-font);
+ background-color: var(--background-color)
+}
+
+canvas {
+	margin: auto;
+}
+
+.grid {
+	max-width: 1280px;
+	min-width: 450px;
+	border: 2px solid var(--border-color);
+	border-radius: 0.5em;
+	padding: 2em;
+	margin: 0 auto;
+	display: grid;
+	grid-gap: 0.5em;
+	grid-template-areas: 
+	"header"
+	"a"
+	"b"
+	"c"
+	"d"
+	"e";
+
+}
+
+.grid > * {
+	background-color: var(--background-color);
+	color: var(--border-color);
+	padding: 1em;
+	border: 2px solid;
+	border-radius: 0.3em;
+	overflow: auto;
+
+}
+
+.grid header {
+	grid-area: header;
+	padding: 0;
+	border: 1px solid var(--border-color);
+	border-left: none;
+	border-right: none;
+	border-radius: 0;
+	font-size: 0.6em;
+	padding: 0.2em;
+	color: var(--font-col);
+	
+}
+
+.chart-container {
+	position: relative;
+	margin: auto;
+
+	height: 40vh;
+	display: flex;	
+}
+
+.grid .a {
+	grid-area: a;
+}
+
+.grid .b {
+	grid-area: b;
+}
+
+.grid .c {
+	grid-area: c;
+}
+
+.grid .c canvas {
+	padding-top: 1em;
+}
+
+.grid .d {
+	grid-area: d;
+}
+
+.grid .e {
+	grid-area: e;
+}
+
+.chart-container .activity canvas{
+	width: 300px;
+}
+
+.content {
+	padding-top: 0;
+}
+
+.content h2{
+	color: var(--font-col);
+	font-size: 1em;
+	text-transform: uppercase;
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+}
+
+
+h2.top-pad {
+	margin-top: 3em;
+}
+.content p {
+	color: var(--border-color);
+	font-size: 0.8em;
+	border-bottom: 1px solid var(--border-color);
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+.content a {
+	text-decoration: none;
+	padding: 0.5em 0 0 0.5em;
+
+}
+
+.alt-1 {
+    color: var(--border-color);
+}
+.alt-2 {
+    color: #E60032;
+}
+
+.right {
+	float: right;
+	text-align: right;
+}
+
+@media (min-width: 600px)   {  
+  
+    .grid {
+
+   		grid-template-columns: auto auto;
+	    grid-template-areas: 
+	    "header		header"
+	    "a 		b"
+	    "c 		d"
+	    "e		e" ;
+    }
+
+    .chart-container .activiy {
+    	width: 600px;
+    }
+}
+
+@media (min-width: 900px)   {  
+
+    .grid {
+
+   		grid-template-columns: auto auto auto;
+	    grid-template-areas: 
+	    "header	header	header"
+	    "a 		b 		c"
+	    "d      e		e" ;
+    }
+}
+
+@media (min-width: 900px)   { 
+	.chart-container .activity canvas {
+		width: 300px;
+	}
+}

@@ -1,5 +1,10 @@
 'use strict'
  
+var backColor =  "white";
+var borderCol = "#213a8f";
+var lightBackColor = "#2e91d2";
+
+
 function jsonp(url) {
     return new Promise(function(resolve, reject) {
         let script = document.createElement('script')
@@ -180,8 +185,8 @@ function makeChart(value) {
 	        datasets: [{
 	            
 	            data: nrOfDatasets,
-	            backgroundColor: '#000000',
-	            borderColor: '#00eeee',
+	            backgroundColor: lightBackColor,
+	            borderColor: borderCol,
 	            borderWidth: 1
 	        }]
 	    },
@@ -194,14 +199,14 @@ function makeChart(value) {
 	        scales: {
 	            yAxes: [{
 	                ticks: {
-	                	fontColor: "white",
+	                	fontColor: borderCol,
 	                    beginAtZero:true,
-	                    color: '#00eeee'
+	                    color: borderCol
 	                }
 	            }],
 	            xAxes: [{
 	            	ticks: {
-	            		fontColor: "white",
+	            		fontColor: '#213a8f',
 	            		autoSkip: false,
 	            		maxRotation: 90,
 	            		minRotation: 90
@@ -224,7 +229,7 @@ function makeDonut(value) {
 	}
 
 	var ctx = document.getElementById("chartTwo").getContext('2d');
-	ctx.canvas.height = 300;
+	ctx.canvas.height = 280;
 
 	var licenceNames = value.map((el) => licenceDict[el.key]);
 	var nrOfDatasets = value.map((el) => el.value);
@@ -237,8 +242,8 @@ function makeDonut(value) {
 	        datasets: [{
 	            
 	            data: nrOfDatasets,
-	            backgroundColor: '#000000',
-	            borderColor: '#00eeee',
+	            backgroundColor: [lightBackColor, borderCol, "#E60032"],
+	            borderColor: borderCol,
 	            borderWidth: 1,
 
 	        }]
@@ -283,14 +288,6 @@ function makeActivity(value) {
 	})
 
 	var ctx = document.getElementById("activity").getContext('2d');
-	// if (small === true) {
-	// 	console.log("ctx is small");
-	// 	ctx.canvas.width = 300;
-	// } else {
-	// 	console.log("ctx is big");
-	// 	ctx.canvas.width = 600;
-	// }
-
 	
 	valueArr = valueArr.reverse().slice(2);
 	dateArr = dateArr.reverse().slice(2);
@@ -304,8 +301,8 @@ function makeActivity(value) {
 
 	        datasets: [{
 	          data: valueArr,
-	          backgroundColor: '#6fc0ba',
-	            borderColor: '#00eeee',
+	          backgroundColor: backColor,
+	            borderColor: borderCol,
 	            borderWidth: 1,
 	            fill: false,
 	            pointRadius: 1
@@ -321,13 +318,13 @@ function makeActivity(value) {
 	        scales: {
 	            yAxes: [{
 	                ticks: {
-	                	fontColor: "white",
-	                    color: '#00eeee'
+	                	fontColor: borderCol,
+	                    color: borderCol
 	                }
 	            }],
 	            xAxes: [{
 	            	ticks: {
-	            		fontColor: "white",
+	            		fontColor: borderCol,
 	            		
 	            	}
 	            }]
@@ -352,8 +349,8 @@ function makeTagCloud(value) {
 	WordCloud(document.getElementById('tagCanvas'), 
 		{ 	list: taglist,
 			fontFamily: "Inconsolata",
-			color: '#00eeee',
-			backgroundColor: "#000000",
+			color: [borderCol],
+			backgroundColor: backColor,
 			weightFactor: 0.04,
 			maxRotation:0
 		});
