@@ -89,9 +89,9 @@ canvas {
 	grid-area: b;
 }
 .grid .b canvas {
-	padding: 1em;
+	display: block;
+	padding-top: 3em;
 }
-
 
 .grid .c {
 	grid-area: c;
@@ -100,7 +100,6 @@ canvas {
 .grid .c canvas {
 	padding-top: 1em;
 }
-
 
 .grid .d {
 	grid-area: d;
@@ -114,8 +113,6 @@ canvas {
 	width: 300px;
 }
 
-
-
 .content {
 	padding-top: 0;
 }
@@ -128,10 +125,6 @@ canvas {
 	border-bottom: 1px solid #1d2c33;
 }
 
-
-.content #top-padding {
-	padding-top: 3em;
-}
 
 h2.top-pad {
 	margin-top: 3em;
@@ -163,15 +156,6 @@ h2.top-pad {
 
 @media (min-width: 600px)   {  
   
-  	/*.container-out {
-  		min-width: 500px;
-  		max-width: 900px;
-  	}*/
-
- /* 	.container-in {
-  		min-width: 820px;
-  		max-width: 880px;
-  	}*/
     .grid {
 
    		grid-template-columns: auto auto;
