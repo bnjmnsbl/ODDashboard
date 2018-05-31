@@ -242,7 +242,7 @@ function makeDonut(value) {
 	        datasets: [{
 	            
 	            data: nrOfDatasets,
-	            backgroundColor: [lightBackColor, borderCol, "#E60032"],
+	            backgroundColor: lightBackColor,
 	            borderColor: borderCol,
 	            borderWidth: 1,
 
