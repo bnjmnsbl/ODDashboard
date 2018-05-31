@@ -17,8 +17,14 @@ function jsonp(url) {
         document.body.appendChild(script);
     });
 }
-var data = jsonp("https://ckan.govdata.de/api/3/action/package_search?fq=organization:berlin-open-data&rows=1000");
-var data2 = jsonp("https://ckan.govdata.de/api/3/action/package_search?fq=organization:berlin-open-data&rows=1000&start=1000&callback=initTwo")
+
+// var data = jsonp("https://datenregister.berlin.de/api/action/package_search&rows=1000&callback=initOne");
+// var data2 = jsonp("https://datenregister.berlin.de/api/action/package_search");
+// // var data2 = jsonp("https://datenregister.berlin.de/api/action/package_search&rows=1000&start=1000&callback=initTwo")
+
+
+var data = jsonp("https://datenregister.berlin.de/api/3/action/package_search?rows=1000");
+var data2 = jsonp("https://datenregister.berlin.de/api/3/action/package_search?rows=1000&start=1000")
 
 Promise.all([data, data2])
 .then(values => {
@@ -26,6 +32,7 @@ Promise.all([data, data2])
 	return resultsArray;
 })
 .then(data => {
+
 	initialize(data);
 });
 
@@ -45,7 +52,7 @@ function initialize(results) {
 	last30Days(results);
 	//Fill HTML
 	document.getElementById("totalDatasets").innerHTML = getTotalNumber(results);
-	document.getElementById("last30").innerHTML = "+" + getTotalNumber(last30Days(results));
+	document.getElementById("last30").innerHTML = getTotalNumber(last30Days(results));
 	
 	for (var i=0; i<3; i++) {
 		document.getElementById("newest" + i).innerHTML = newest3[i].name + "<a class='alt-1 right' href='"+ newest3[i].url + "'>LINK</a><br />";
@@ -215,11 +222,11 @@ function makeChart(value) {
 function makeDonut(value) {
 	
 	var licenceDict = {
-		"Creative Commons Namensnennung (CCBY)": "CC-BY",
-		"Nutzungsbestimmungen für die Bereitstellung von Geodaten des Landes Berlin": "Geo Berlin",
-		"Creative Commons Attribution ShareAlike (ccbysa)": "CC-BY-SA",
-		"Andere geschlossene Lizenz": "Andere (nicht offen)",
-		"Creative Commons CCZero (CC0)": "CC-0",
+		"Creative Commons Attribution": "CC-BY",
+		"GeoNutzV-Berlin": "Geo Berlin",
+		"Creative Commons Attribution Share-Alike": "CC-BY-SA",
+		"Siehe Website des Datensatzes": "Andere (nicht offen)",
+		"Creative Commons Zero": "CC-0",
 		"dl-de-2-0": "DL DE 2.0"
 	}
 
@@ -257,6 +264,7 @@ function makeDonut(value) {
 
 function makeActivity(value) {
 	
+	console.dir(value)
 	var dateObj = {};
 	var dateArr = [];
 	var valueArr = [];
@@ -283,20 +291,10 @@ function makeActivity(value) {
 	})
 
 	var ctx = document.getElementById("activity").getContext('2d');
-	// if (small === true) {
-	// 	console.log("ctx is small");
-	// 	ctx.canvas.width = 300;
-	// } else {
-	// 	console.log("ctx is big");
-	// 	ctx.canvas.width = 600;
-	// }
-
 	
 	valueArr = valueArr.reverse().slice(2);
 	dateArr = dateArr.reverse().slice(2);
 
-	console.dir(valueArr);
-	console.dir(dateArr);
 	var myChart = new Chart(ctx, {
 	    type: 'line',
 	    data: {
