@@ -32,7 +32,7 @@ Promise.all([data, data2])
 	return resultsArray;
 })
 .then(data => {
-
+	console.dir(data);
 	initialize(data);
 });
 
